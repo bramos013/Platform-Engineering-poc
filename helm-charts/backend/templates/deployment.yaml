@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ .Release.Name }}
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+
+    spec:
+      containers:
+      - name: backend
+
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+
+        imagePullPolicy: Never
+
+        ports:
+        - containerPort: {{ .Values.service.port }}
+
+        env:
+          - name: DB_HOST
+            value: postgres
+        
+          - name: DB_NAME
+            value: platformdb
+        
+          - name: DB_USER
+            value: admin
+        
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: POSTGRES_PASSWORD
