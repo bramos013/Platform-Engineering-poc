@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Platform Engineering POC</title>
+</head>
+<body>
+
+<h1>Frontend React (Simplificado)</h1>
+
+<button onclick="loadBackend()">
+    Chamar Backend
+</button>
+
+<pre id="result"></pre>
+
+<script>
+async function loadBackend() {
+
+    const response = await fetch(
+        "http://localhost:3000"
+    );
+
+    const data = await response.json();
+
+    document.getElementById("result")
+        .innerText = JSON.stringify(data, null, 2);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+services:
+
+  backend:
+    build:
+      context: ./templates/node-template
+    container_name: poc-backend
+
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build:
+      context: ./templates/react-template
+    container_name: poc-frontend
+
+    ports:
+      - "3001:3001"
+
+    depends_on:
+      - backend
